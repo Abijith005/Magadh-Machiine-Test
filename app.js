@@ -16,4 +16,4 @@ app.listen(port,()=>{
     console.log('App runnig');
 })
 
-app.use('/',authorRouter)
+app.use('/api/admin',authorRouter)
