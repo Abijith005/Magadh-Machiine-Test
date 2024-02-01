@@ -2,6 +2,8 @@ import express from 'express'
 import morgan from 'morgan'
 import 'dotenv/config'
 import authorRouter from './routes/authorRoutes.js'
+import adminAuth from './middlewares/adminAuth.js'
+
 
 
 
@@ -17,3 +19,5 @@ app.listen(port,()=>{
 })
 
 app.use('/api/admin',authorRouter)
+app.use('/api/author',authorRouter)
+app.use('/api/retailUser',authorRouter)

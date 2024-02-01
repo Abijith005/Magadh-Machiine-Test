@@ -4,7 +4,7 @@ async function adminAuth(req,res,next){
     try {
         const token = req.headers.authentication;
         const authorized = jwtVerify(token);
-        if (authorized.role === "Admin") {
+        if (authorized.role === "RetailUser") {
           next();
         } else {
           res.status(401).json({ success: false, message: "unauthorized" });
