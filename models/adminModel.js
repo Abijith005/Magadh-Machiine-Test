@@ -1,18 +1,14 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/sequelize.js'; 
 
-class Author extends Model {}
+class Admin extends Model {}
 
-Author.init(
+Admin.init(
   {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
       unique: true,
+      allowNull: false,
     },
     password: {
       type: DataTypes.STRING,
@@ -21,8 +17,8 @@ Author.init(
   },
   {
     sequelize,
-    modelName: 'Author',
+    modelName: 'Admin',
   }
 );
 
-export default Author;
+export default Admin;

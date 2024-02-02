@@ -28,12 +28,12 @@ export const userLogin = async (req, res) => {
       const matchPassword = await bcrypt.compare(password, user.password);
       if (matchPassword) {
         const token = jwtSign({ email: user.email, role: "Retail User" });
-        res.setHeader('authToken',token)
         res
           .status(200)
           .json({
             success: true,
             message: "Login successfull",
+            authToken:token
           });
       } else {
         res.status(401).json({ success: false, message: "Incorrect password" });
