@@ -27,7 +27,7 @@ export const userLogin = async (req, res) => {
     if (user) {
       const matchPassword = await bcrypt.compare(password, user.password);
       if (matchPassword) {
-        const token = jwtSign({ email: user.email, role: "Retail User" });
+        const token = jwtSign({userId:user.id,email: user.email, role: "Retail User" });
         res
           .status(200)
           .json({
@@ -47,11 +47,4 @@ export const userLogin = async (req, res) => {
   }
 };
 
-export const hello=async(req,res)=>{
-  try {
-    
-    console.log('hello iam in controller');
-  } catch (error) {
-    
-  }
-}
+

@@ -1,7 +1,9 @@
 import express from 'express'
-import { hello } from '../controllers/userAuthController.js'
+import { purchaseBook, purchaseHistory } from '../controllers/userController.js'
 
 const router=express.Router()
 
-router.get ('/simply',hello)
+router.post ('/purchaseBook',purchaseBook)
+
+router.get('/purchaseHistory',purchaseHistory)
 export default router
