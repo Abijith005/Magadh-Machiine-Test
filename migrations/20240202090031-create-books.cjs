@@ -27,6 +27,14 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
+      rating:{
+        type:Sequelize.FLOAT,
+        allowNull:false,
+        validate:{
+          min:0,
+          max:5
+        }
+      },
       price: {
         type: Sequelize.FLOAT,
         allowNull: false,

@@ -1,6 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/sequelize.js";
 import slugify from "slugify";
+import Author from "./authorModel.js";
 
 class Book extends Model {}
 
@@ -13,12 +14,17 @@ Book.init(
       allowNull:false
     },
     authors: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
+      references:{
+        model:Author,
+        key:'id'
+      }
     },
     sellCount: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue:0
     },
     title: {
       type: DataTypes.STRING,
@@ -37,6 +43,15 @@ Book.init(
         max: 1000,
       },
     },
+    rating:{
+      type:DataTypes.FLOAT,
+      allowNull:false,
+      defaultValue:0,
+      validate:{
+        min:0,
+        max:5
+      }
+    }
   },
   {
     sequelize,

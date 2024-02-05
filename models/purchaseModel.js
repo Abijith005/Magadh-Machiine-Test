@@ -2,6 +2,7 @@ import { Model, DataTypes, Sequelize } from "sequelize";
 import sequelize from "../config/sequelize.js";
 import User from "./userModel.js";
 import Book from "./bookModel.js";
+import Author from "./authorModel.js";
 
 class Purchase extends Model {}
 
@@ -16,32 +17,32 @@ Purchase.init(
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references:{
-        model:User,
-        key:"id"
-      }
+      references: {
+        model: User,
+        key: "id",
+      },
     },
     bookId: {
       type: DataTypes.STRING,
       allowNull: false,
-      references:{
-        model:Book,
-        key:"bookId"
-      }
+      references: {
+        model: Book,
+        key: "bookId",
+      },
     },
-    purchaseDate:{
-      type:DataTypes.DATEONLY,
-      allowNull:false,
-      defaultValue: Sequelize.fn('CURDATE'), 
+    purchaseDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.fn("NOW"),
     },
-    price:{
-      type:DataTypes.INTEGER,
-      allowNull:false
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
-    quantity:{
-      type:DataTypes.INTEGER,
-      allowNull:false
-    }
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     sequelize,
@@ -84,10 +85,28 @@ Purchase.init(
           ) {
             count = parseInt(lastPurchase.purchaseId.split("-")[2]) + 1;
           }
-
           purchase.purchaseId = `${year}-${month
             .toString()
             .padStart(2, "0")}-${count}`;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
+      afterCreate: async (purchase) => {
+        try {
+          const book = await Book.findByPk(purchase.bookId);
+
+          if (book) {
+            book.sellCount = (book.sellCount || 0) + purchase.quantity;
+            await book.save();
+          }
+          const author = await Author.findByPk(book.authors);
+
+          if (author) {
+            author.revenue += book.price;
+            await author.save();
+          }
         } catch (error) {
           console.error(error);
         }

@@ -18,6 +18,11 @@ Author.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    revenue:{
+    type:DataTypes.FLOAT,
+    allowNull:false,
+    defaultValue:0
+    },
   },
   {
     sequelize,
