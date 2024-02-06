@@ -18,6 +18,7 @@ const port = process.env.PORT || 6000;
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.urlencoded({extended:true}))
 sequelize
   .sync()
   .then(() => {
