@@ -8,7 +8,7 @@ export const senteee = async (req, res) => {
     const job={}
     for (const author of authors) {
       job.email=author.email
-      job.subject='hello how are u'
+      job.subject='New Book Release Notification '
       job.html=`<h1>Hello it is a test mail</h1>`
       await emailQueue.add(job)
     }

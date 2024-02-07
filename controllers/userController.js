@@ -14,11 +14,26 @@ export const purchaseBook = async (req, res) => {
 
     const { userId, email } = jwtDecode(req.headers.authentication);
 
+    const book = await bookModel.findByPk(bookId);
+
+    console.log(book.get({ plain: true }));
     await purchaseModel.create({ userId, bookId, quantity, price });
 
     const subject = "Pruchase Confirmation";
-    const html = `<h1>purchase confirmed</h1>`;
-    await emailQueue.add({ email, subject, html });
+    const html = `
+<p>Thank you for your purchase!</p>
+<h2>Purchase Details:</h2>
+<ul>
+  <li>Book Title:${book.dataValues.title.replace(/-/g, " ")}</li>
+  <li>Quantity: ${quantity}</li>
+  <li>Total Price:${price}</li>
+</ul>
+<p>Thanks again for choosing our bookstore!</p>
+    `;
+    await emailQueue.add(
+      { email: "surendranabijith124@gmail.com", subject, html },
+      { attempts: 1 }
+    );
 
     res
       .status(200)

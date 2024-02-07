@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 
+let count=0;
 async function sentMail(email,subject,html) {
   try {
     const transporter = nodemailer.createTransport({
@@ -22,7 +23,9 @@ async function sentMail(email,subject,html) {
       html:html,
     };
 
+
     transporter.sendMail(mailOptions, function (error, info) {
+      console.log(++count);
       if (error) {
         console.log("email sent error ", error);
         reject(error);
