@@ -11,13 +11,15 @@ import adminAuth from "./middlewares/adminAuth.js";
 import authorAuth from "./middlewares/authorAuth.js";
 import userAuth from "./middlewares/retailUserAuth.js";
 import sequelize from "./config/sequelize.js";
+import cronJob from "./helpers/cron-job.js";
+
 const app = express();
 const port = process.env.PORT || 6000;
 
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }));
 sequelize
   .sync()
   .then(() => {
@@ -30,10 +32,12 @@ app.listen(port, () => {
   console.log("App runnig");
 });
 
+cronJob();
+
 app.use("/api/auth/admin", adminAuthRouter);
 app.use("/api/auth/author", authorAuthRouter);
 app.use("/api/auth/retailUser", userAuthRouter);
-app.use("/api/admin", adminRouter);
+// app.use("/api/admin", adminAuth, adminRouter);
+app.use("/api/admin",  adminRouter);
 app.use("/api/author", authorAuth, authorRouter);
 app.use("/api/retailUser", userAuth, userRouter);
- 

@@ -1,18 +1,17 @@
 import nodemailer from "nodemailer";
 
-let count=0;
-async function sentMail(email,subject,html) {
+async function sentMail(email, subject, html) {
   try {
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com", 
-      port: 465, 
+      host: "smtp.gmail.com",
+      port: 465,
       secure: true,
       tls: {
         rejectUnauthorized: false,
-      }, 
+      },
       auth: {
-        user: process.env.EMAIL, 
-        pass: process.env.EMAIL_PASSWORD, 
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
       },
     });
 
@@ -20,12 +19,10 @@ async function sentMail(email,subject,html) {
       from: process.env.EMAIL,
       to: email,
       subject: subject,
-      html:html,
+      html: html,
     };
 
-
     // transporter.sendMail(mailOptions, function (error, info) {
-    //   console.log(++count);
     //   if (error) {
     //     console.log("email sent error ", error);
     //     reject(error);
@@ -39,4 +36,4 @@ async function sentMail(email,subject,html) {
   }
 }
 
-export default sentMail
+export default sentMail;

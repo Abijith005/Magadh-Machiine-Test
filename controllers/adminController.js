@@ -1,3 +1,4 @@
+import { emailQueue } from "../config/queue.js";
 import authorModel from "../models/authorModel.js";
 import purchaseModel from "../models/purchaseModel.js";
 export const createAuthor = async (req, res) => {
@@ -9,7 +10,7 @@ export const createAuthor = async (req, res) => {
   }
 };
 
-export const test = async (req, res) => {
+export const revenueNotification = async () => {
   try {
     const authors = await authorModel.findAll();
     const purchase = await purchaseModel.findAll();
@@ -22,6 +23,9 @@ export const test = async (req, res) => {
         }
       });
 
+      const month = new Intl.DateTimeFormat("en", { month: "long" }).format(
+        new Date()
+      );
       const currentMonth = (new Date().getMonth() + 1)
         .toString()
         .padStart(2, "0");
@@ -42,25 +46,26 @@ export const test = async (req, res) => {
         { monthly: 0, yearly: 0 }
       );
 
-      console.log(revenue);
       job.html = `<h1>Monthly Revenue Report</h1>
-  
-          <p>Dear ${author.name},</p>
-          
-          <p>We are pleased to provide you with the latest revenue information for our bookstore. Here are the details:</p>
-          
-          <h2>Revenue Details:</h2>
-          
-          <ul>
-            <li><strong>Current Month Revenue:</strong> $[Current Month Revenue]</li>
-            <li><strong>Current Year Revenue:</strong> $[Current Year Revenue]</li>
-            <li><strong>Total Revenue:</strong> $ ${author.revenue}</li>
-          </ul>
-          
-          <p>Thank you for your continued support. If you have any questions or would like more information, feel free to reach out to us.</p>
-          
-          <p>Best regards,<br>
-           BOOK STORE</p>`;
+
+        <p>Dear ${author.name},</p>
+        
+        <p>We are pleased to provide you with the latest revenue information for our bookstore. Here are the details:</p>
+        
+        <h2>Revenue Details:</h2>
+        
+        <ul>
+          <li><strong>The revenue for the month of ${month} ${currentYear}:</strong> ₹ ${revenue.monthly}</li>
+          <li><strong>The revenue for the year ${currentYear}:</strong> ₹ ${revenue.yearly}</li>
+          <li><strong>Total Revenue:</strong> ₹ ${author.revenue}</li>
+        </ul>
+        
+        <p>Thank you for your continued support. If you have any questions or would like more information, feel free to reach out to us.</p>
+        
+        <p>Best regards,<br>
+         BOOK STORE</p>`;
+
+      await emailQueue.add(job);
     }
   } catch (error) {
     console.log(error);

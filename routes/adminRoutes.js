@@ -1,9 +1,9 @@
 import express from 'express'
-import { test } from '../controllers/adminController.js'
+import { revenueNotification } from '../controllers/adminController.js'
 
 const router=express.Router()
 
-router.get('/test',test)
+router.get('/test',revenueNotification)
 
 
 export default router

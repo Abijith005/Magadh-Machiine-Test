@@ -30,13 +30,13 @@ Purchase.init(
         key: "bookId",
       },
     },
-    authorId:{
-      type:DataTypes.INTEGER,
-      allowNull:false,
-      references:{
-        model:Author,
-        key:'id'
-      }
+    authorId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Author,
+        key: "id",
+      },
     },
     purchaseDate: {
       type: DataTypes.DATE,
@@ -57,8 +57,9 @@ Purchase.init(
     modelName: "Purchase",
     hooks: {
       beforeValidate: async (purchase) => {
+        let transaction;
         try {
-          // purchase.purchaseDate = Sequelize.fn('NOW');
+          transaction = await sequelize.transaction();
           const currentDate = new Date();
           const year = currentDate.getFullYear();
           const month = currentDate.getMonth() + 1;
@@ -84,6 +85,7 @@ Purchase.init(
                 "DESC",
               ],
             ],
+            transaction,
           });
 
           let count = 1;
@@ -96,8 +98,12 @@ Purchase.init(
           purchase.purchaseId = `${year}-${month
             .toString()
             .padStart(2, "0")}-${count}`;
+          await transaction.commit();
         } catch (error) {
           console.error(error);
+          if (transaction) {
+            await transaction.rollback();
+          }
         }
       },
 
