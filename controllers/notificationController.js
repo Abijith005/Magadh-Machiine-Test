@@ -1,5 +1,5 @@
 import authorModel from "../models/authorModel.js";
-import {emailQueue} from '../services/queue.js'
+import {emailQueue} from '../config/queue.js'
 
 export const senteee = async (req, res) => {
   try {

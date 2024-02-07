@@ -1,5 +1,5 @@
 import sentMail from "../helpers/sentMail.js";
-import { limiter } from "../services/queue.js";
+import { limiter } from "../config/queue.js";
 
 const emailQueueProcessor = async (job) => {
   try {

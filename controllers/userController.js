@@ -6,7 +6,7 @@ import reviewsModel from "../models/reviewsModel.js";
 import slugify from "slugify";
 import authorModel from "../models/authorModel.js";
 import moment from "moment";
-import { emailQueue } from "../services/queue.js";
+import { emailQueue } from "../config/queue.js";
 
 export const purchaseBook = async (req, res) => {
   try {
@@ -15,9 +15,9 @@ export const purchaseBook = async (req, res) => {
     const { userId, email } = jwtDecode(req.headers.authentication);
 
     const book = await bookModel.findByPk(bookId);
+    const authorId=book.dataValues.authors
 
-    console.log(book.get({ plain: true }));
-    await purchaseModel.create({ userId, bookId, quantity, price });
+    await purchaseModel.create({ userId, bookId,authorId, quantity, price });
 
     const subject = "Pruchase Confirmation";
     const html = `
@@ -30,10 +30,7 @@ export const purchaseBook = async (req, res) => {
 </ul>
 <p>Thanks again for choosing our bookstore!</p>
     `;
-    await emailQueue.add(
-      { email: "surendranabijith124@gmail.com", subject, html },
-      { attempts: 1 }
-    );
+    await emailQueue.add({ email, subject, html }, { attempts: 1 });
 
     res
       .status(200)

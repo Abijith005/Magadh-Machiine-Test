@@ -30,6 +30,14 @@ Purchase.init(
         key: "bookId",
       },
     },
+    authorId:{
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      references:{
+        model:Author,
+        key:'id'
+      }
+    },
     purchaseDate: {
       type: DataTypes.DATE,
       allowNull: false,

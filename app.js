@@ -33,7 +33,7 @@ app.listen(port, () => {
 app.use("/api/auth/admin", adminAuthRouter);
 app.use("/api/auth/author", authorAuthRouter);
 app.use("/api/auth/retailUser", userAuthRouter);
-app.use("/api/admin", adminAuth, adminRouter);
+app.use("/api/admin", adminRouter);
 app.use("/api/author", authorAuth, authorRouter);
 app.use("/api/retailUser", userAuth, userRouter);
  
