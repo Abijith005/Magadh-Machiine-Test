@@ -11,7 +11,6 @@ import adminAuth from "./middlewares/adminAuth.js";
 import authorAuth from "./middlewares/authorAuth.js";
 import userAuth from "./middlewares/retailUserAuth.js";
 import sequelize from "./config/sequelize.js";
-
 const app = express();
 const port = process.env.PORT || 6000;
 
@@ -37,3 +36,4 @@ app.use("/api/auth/retailUser", userAuthRouter);
 app.use("/api/admin", adminAuth, adminRouter);
 app.use("/api/author", authorAuth, authorRouter);
 app.use("/api/retailUser", userAuth, userRouter);
+ 

@@ -6,12 +6,20 @@ import reviewsModel from "../models/reviewsModel.js";
 import slugify from "slugify";
 import authorModel from "../models/authorModel.js";
 import moment from "moment";
+import { emailQueue } from "../services/queue.js";
 
 export const purchaseBook = async (req, res) => {
   try {
     const { bookId, quantity, price } = req.body;
-    const { userId } = jwtDecode(req.headers.authentication);
+
+    const { userId, email } = jwtDecode(req.headers.authentication);
+
     await purchaseModel.create({ userId, bookId, quantity, price });
+
+    const subject = "Pruchase Confirmation";
+    const html = `<h1>purchase confirmed</h1>`;
+    await emailQueue.add({ email, subject, html });
+
     res
       .status(200)
       .json({ success: true, message: "Purchased book suucessfully" });
@@ -56,7 +64,7 @@ export const searchBook = async (req, res) => {
       const [minDate, maxDate] = JSON.parse(date).map((item) =>
         moment.utc(item, "DD-MM-YYYY").toDate()
       );
-      maxDate.setHours(23,59,59,999)
+      maxDate.setHours(23, 59, 59, 999);
       query.createdAt = { [Op.between]: [minDate, maxDate] };
     }
     if (price) {
@@ -64,7 +72,7 @@ export const searchBook = async (req, res) => {
       query.price = { [Op.between]: [minPrice, maxPrice] };
     }
 
-    if (title) query.title = { [Op.like]: `%${slugify(title)}%`};
+    if (title) query.title = { [Op.like]: `%${slugify(title)}%` };
     if (author) {
       const authors = await authorModel.findAll({
         where: { name: { [Op.like]: `%${author}%` } },
