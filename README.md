@@ -1,3 +1,41 @@
+## Overview
+
+This project is designed to [briefly describe the purpose or main features of your project].
+
+## Logic for Computing sellCount
+
+The `sellCount` is calculated dynamically based on the quantity of books sold. This information is updated using SQL hooks, specifically during the purchase confirmation process. Here's an overview of the logic:
+
+1. **Purchase Trigger**: When a user purchases a book, the `quantity` of the purchased books is marked during the transaction. This information is recorded in the purchase details.
+
+2. **SQL Hooks Integration**: SQL hooks, also known as triggers, are used to automatically update the `sellCount` in the Book model whenever a purchase is confirmed.
+
+3. **Sell Count Calculation**: The `sellCount` in the Book model is calculated by summing up the quantities of the book sold across all purchase transactions.
+
+
+## Mechanism for Sending Email Notifications
+
+### Overview
+
+Email notifications are an essential part of the system to keep users informed about various events or updates. The mechanism for sending email notifications is implemented using [provide the name or description of the email service/library used].
+
+### Steps
+
+1. **Job Creation**: Whenever a relevant event occurs (e.g., new book release, purchase confirmation), a job is created in the email queue. The job contains essential information such as recipient email, subject, and content.
+
+2. **Queue Processing**: The email queue processor is responsible for handling these jobs. It fetches the job from the queue and triggers the email sending process.
+
+3. **Email Sending**: The email sending process involves [describe the process, such as connecting to an SMTP server, formatting the email content, etc.].
+
+4. **Throttling Mechanism**: To prevent abuse or to adhere to email service provider limits, a throttling mechanism is implemented. This ensures that a specific number of emails are sent within a defined time frame.
+
+
+
+
+
+
+
+
 ## Implementation Guidelines
 
 ### Authentication
@@ -124,7 +162,7 @@ Body:
 
 #### Example API Endpoint for Purchasing a Book
 
-POST /api/retail-users/purchase
+POST /api/v1/retailUser/purchaseBook
 Headers:
   Authorization: Retail User JWT Token
 Body:
@@ -222,7 +260,7 @@ Query Parameters:
 
 #### Example API Endpoint for Initiating Payment
 
-POST /api/retail-users/initiate-payment
+POST /api/v1/retailUser/payment
 Headers:
   Authorization: Retail User JWT Token
 Body:
