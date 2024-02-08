@@ -2,7 +2,7 @@ import jwtVerify from "../helpers/jwitVerify.js";
 
 async function authorAuth(req, res, next) {
   try {
-    const token = req.headers.authentication;
+    const token = req.headers.authorization;
     const authorized = jwtVerify(token);
     if (authorized.role === "Author") {
       next();

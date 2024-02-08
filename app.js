@@ -34,10 +34,9 @@ app.listen(port, () => {
 
 cronJob();
 
-app.use("/api/auth/admin", adminAuthRouter);
-app.use("/api/auth/author", authorAuthRouter);
-app.use("/api/auth/retailUser", userAuthRouter);
-// app.use("/api/admin", adminAuth, adminRouter);
-app.use("/api/admin",  adminRouter);
-app.use("/api/author", authorAuth, authorRouter);
-app.use("/api/retailUser", userAuth, userRouter);
+app.use("/api/v1/auth/admin", adminAuthRouter);
+app.use("/api/v1/auth/author", authorAuthRouter);
+app.use("/api/v1/auth/retailUser", userAuthRouter);
+app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/author", authorAuth, authorRouter);
+app.use("/api/v1/retailUser", userAuth, userRouter);

@@ -1,12 +1,8 @@
 import express from 'express'
-import { revenueNotification } from '../controllers/adminController.js'
-import { payment } from '../controllers/paymentContoller..js'
+import { sendNotifications } from '../controllers/adminController.js'
 
 const router=express.Router()
 
-router.get('/test',revenueNotification)
-
-router.post('/pay',payment)
-
+router.post('/sendNotification',sendNotifications)
 
 export default router

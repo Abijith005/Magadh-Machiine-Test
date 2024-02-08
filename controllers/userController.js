@@ -12,7 +12,7 @@ export const purchaseBook = async (req, res) => {
   try {
     const { bookId, quantity, price } = req.body;
 
-    const { userId, email } = jwtDecode(req.headers.authentication);
+    const { userId, email } = jwtDecode(req.headers.authorization);
 
     const book = await bookModel.findByPk(bookId);
     const authorId=book.dataValues.authors
@@ -43,7 +43,7 @@ export const purchaseBook = async (req, res) => {
 
 export const purchaseHistory = async (req, res) => {
   try {
-    const { userId } = jwtDecode(req.headers.authentication);
+    const { userId } = jwtDecode(req.headers.authorization);
     const purchaseHistory = await purchaseModel.findAll({
       where: { userId: userId },
     });
@@ -57,7 +57,7 @@ export const purchaseHistory = async (req, res) => {
 export const reviewBook = async (req, res) => {
   try {
     const { bookId, rating, review } = req.body;
-    const { userId } = jwtDecode(req.headers.authentication);
+    const { userId } = jwtDecode(req.headers.authorization);
     await reviewsModel.create({ bookId, userId, rating, review });
     res
       .status(200)

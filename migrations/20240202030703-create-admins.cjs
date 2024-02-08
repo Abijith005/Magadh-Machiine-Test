@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const password = await bcrypt.hash("123456", 10);
+    const password = await bcrypt.hash("password123", 10);
     console.log(password);
     await queryInterface.createTable("Admins", {
       id: {

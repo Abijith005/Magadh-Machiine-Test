@@ -14,7 +14,7 @@
   "dependencies": {
     "@bull-board/api": "^5.14.0",
     "@bull-board/express": "^5.14.0",
-    "@cashfreepayments/cashfree-sdk": "^0.1.7",
+    "@cashfreepayments/cashfree-js": "^1.0.4",
     "bcrypt": "^5.1.1",
     "bottleneck": "^2.19.5",
     "bull": "^4.12.2",
@@ -31,6 +31,7 @@
     "redis": "^4.6.13",
     "sequelize": "^6.35.2",
     "sequelize-cli": "^6.6.2",
-    "slugify": "^1.6.6"
+    "slugify": "^1.6.6",
+    "stripe": "^14.15.0"
   }
 }

@@ -2,7 +2,7 @@ import jwtVerify from "../helpers/jwitVerify.js";
 
 async function adminAuth(req, res, next) {
   try {
-    const token = req.headers.authentication;
+    const token = req.headers.authorization;
     const authorized = jwtVerify(token);
     if (authorized.role === "Admin") {
       next();

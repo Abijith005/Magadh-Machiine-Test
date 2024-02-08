@@ -1,14 +1,16 @@
 import { emailQueue } from "../config/queue.js";
 import authorModel from "../models/authorModel.js";
 import purchaseModel from "../models/purchaseModel.js";
-export const createAuthor = async (req, res) => {
+
+export const sendNotifications=async(req,res)=>{
   try {
-    const { name, email, password } = req.body;
+   await revenueNotification()
+   res.status(200).json({success:true,message:'Email notification send to all user'})
   } catch (error) {
-    console.error("error", error);
+    console.log("Error \n", error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
-};
+}
 
 export const revenueNotification = async () => {
   try {
@@ -69,5 +71,6 @@ export const revenueNotification = async () => {
     }
   } catch (error) {
     console.log(error);
+    throw error
   }
 };
