@@ -93,7 +93,6 @@ export const searchBook = async (req, res) => {
       query.authors = { [Op.in]: authorsIds };
     }
 
-    console.log(query);
     const result = await bookModel.findAll({ where: query });
 
     res.status(200).json({ success: true, data: result });

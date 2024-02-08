@@ -7,7 +7,6 @@ const cronJob = () => {
   cron.schedule(
     "05 23 * * *",
     async () => {
-      console.log("scheduling job to send email");
       try {
         revenueNotification();
       } catch (error) {

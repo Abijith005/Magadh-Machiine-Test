@@ -37,6 +37,6 @@ cronJob();
 app.use("/api/v1/auth/admin", adminAuthRouter);
 app.use("/api/v1/auth/author", authorAuthRouter);
 app.use("/api/v1/auth/retailUser", userAuthRouter);
-app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/admin", adminAuth, adminRouter);
 app.use("/api/v1/author", authorAuth, authorRouter);
 app.use("/api/v1/retailUser", userAuth, userRouter);
