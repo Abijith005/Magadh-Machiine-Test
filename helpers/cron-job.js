@@ -5,7 +5,7 @@ import { emailQueue } from "../config/queue.js";
 import { revenueNotification } from "../controllers/adminController.js";
 const cronJob = () => {
   cron.schedule(
-    "05 23 * * *",
+    "0 0 1 * *",
     async () => {
       try {
         revenueNotification();
